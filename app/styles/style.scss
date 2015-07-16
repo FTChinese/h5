@@ -417,7 +417,15 @@ background-size: 2px 2px;
 .railText {font-size:12px;color:#FFF;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:5px;padding:3px 0;}
 .rail img{max-height:162px;max-width:100px;}
 .railImageTable{display:table;width:100px;height:162px;}
-.railImageCell{display:table-cell;width:100px;height:162px;text-align:center;vertical-align:middle;}
+.railImageCell{
+    display:table-cell;
+    width:100px;
+    height:162px;
+    text-align:center;
+    vertical-align:middle;
+    background-size:cover;
+    background-position:50% 50%;
+}
 .contentheadline .rail{width:84px;}
 .contentheadline .railImage{height:136px;}
 .contentheadline .rail img{max-height:136px;max-width:84px;}
@@ -481,14 +489,12 @@ display:none;
 }
 .navleftcontainer {
 left: 0;
-background: -webkit-gradient(linear, 0 0, 100% 0, from(#a7a49b), to(transparent), color-stop(0.5, #a7a49b), color-stop(0.5, rgba(0,0,0,0.2)));
-background: -ms-linear-gradient(left, #a7a49b, #a7a49b 50%, rgba(0,0,0,0.2) 50%, transparent 100%);
+@include background-image(linear-gradient(left, #a7a49b, #a7a49b 50%, rgba(0,0,0,0.2) 50%, transparent 100%));
 cursor: pointer;
 }
 .navrightcontainer {
 right: 0;
-background: -webkit-gradient(linear, 0 0, 100% 0, from(transparent), to(#a7a49b), color-stop(0.5, rgba(0,0,0,0.2)), color-stop(0.5, #a7a49b));
-background: -ms-linear-gradient(right, #a7a49b, #a7a49b 50%, rgba(0,0,0,0.2) 50%, transparent 100%);
+@include background-image(linear-gradient(right, #a7a49b, #a7a49b 50%, rgba(0,0,0,0.2) 50%, transparent 100%));
 cursor: pointer;
 }
 .subleftbg {
@@ -592,14 +598,6 @@ margin-left: 8px;
 .whitefont {color:#FFF;}
 .menutopic{right:70px;top:80px;width:900px;height:30px;text-align:right;font-size:17px;line-height:30px;color:white;z-index:9;}
 .menutopic span.highlight{color:#9b164f;font-weight:bold;background:#FFF1E0;padding:4px;-moz-border-radius:2px;-webkit-border-radius:2px;border-radius:2px;}
-table {margin:auto;border:1px solid #000;text-align:left;}
-th {border-bottom: 1px dashed #666;font-weight:bold;padding: 12px 17px;font-size:21px;}
-td {padding:7px 17px;font-size:19px;}
-table.ce {border:medium none;}
-table.ce td {vertical-align:top;padding-top:0;padding-bottom:0;}
-td.righttd {padding-left:15px;width: 47%;}
-td.lefttd {border-right: 1px dashed #CCCCCC;padding-right:15px;width:48%;font-family:Georgia;}
-
 
 
 

@@ -245,7 +245,12 @@
     margin-bottom: 0.382em;
   }
 }
-
+#game .layout-5 .o-text-block.o-font-small {
+  font-size: 0.8em;
+  p {
+    padding-left: 0;
+  }
+}
 .o-text-block:first-child p:first-child:first-letter {
   font-size: 775%;
   display: block;
@@ -255,7 +260,15 @@
   margin: 10px 5px 0 -4px;
   text-rendering: optimizelegibility;
 }
-
+.o-text-block a:link, .o-text-block a:visited {
+  color: #2e6e9e;
+}
+.o-text-block a:hover, .o-text-block a:active {
+  color: #000;
+}
+.o-text-block.o-side {
+  display: none;
+}
 @media only screen and (min-width: 450px) {
   .o-bg-style-dark.slide {
     font-size: 18px;
@@ -275,6 +288,16 @@
 @media only screen and (min-width: 700px) {
   .o-bg-style-dark.slide {
     font-size: 20px;
+  }
+  .o-text-block.o-side {
+    display: block;
+    width: 300px;
+  }
+}
+
+@media only screen and (min-width: 845px) {
+  .o-text-block.o-side {
+    width: 422px;
   }
 }
 
@@ -296,4 +319,3 @@
 .slide.section-bg-3 {
   background-image: url(http://ig.ft.com/sites/2015/special-reports/shanghai/media/blinky-5-hr_trwu830.png);
 }
-

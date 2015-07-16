@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>FT中文网沉浸式报道DEMO</title>
+<title>特别报道</title>
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 <link rel="apple-touch-icon-precomposed" href="img/fticon.png" />
@@ -28,21 +28,24 @@ ga('send', 'pageview');
 
 <div id="share-icon"><img src="http://s.ftimg.net/img/friend-share-icon.jpg" /></div>
 
-<div id="screenstart" class=opening ontouchmove="event.preventDefault();"><span><p class=booklead id="startstatus">FT中文网沉浸式报道模版</p><div class="progresscontainer instartscreen"><div id="startbar" class="progressbar standardprogressbar uses3d progressbg structureprogress"></div></div><p class=booklead id="loadstatus">&nbsp;</p></span>
+<div id="screenstart" class=opening ontouchmove="event.preventDefault();"><span><p class=booklead id="startstatus">FT中文网特别报道</p><div class="progresscontainer instartscreen"><div id="startbar" class="progressbar standardprogressbar uses3d progressbg structureprogress"></div></div><p class=booklead id="loadstatus">&nbsp;</p></span>
 
 <div class="backuplinks"><a onclick="javascript:window.location.reload()">重新加载</a></div>
 </div>
 
+<!--如果要出目录，就必须用到FTScroller-->
 
-<!-- build:js scripts/demo1.js?0 -->
+<!-- build:js scripts/demo1.js -->
 <!-- bower:js -->
+<script src="../bower_components/ftscroller/lib/ftscroller.js"></script>
 <script src="../bower_components/jquery/dist/jquery.js"></script>
 <script src="../bower_components/h5/ft_careers/swipebook.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
 
-<div class="fullbody fruit" id=game>
+<div class="fullbody fruit" id="game">
+
 
 
 <div id=swipe>
@@ -50,7 +53,80 @@ ga('send', 'pageview');
 </div>
 </div>
 
+<div class="tap pagedots"></div>
 
+<div class="tap pagetitle"></div>
+
+<div id=contentRail style="">
+    <div class="-bg-checkered">
+        <div id=toolRail>
+            <div class="nutmeg-content">
+                <div class="nutmeg-content_left"><button onclick="jumptostory('contentpage')"><i aria-hidden="true">-</i><span id='index-title'>目录</span></button></div>
+                <div class="nutmeg-content_right"><button onclick="setting()" class="nutmeg_settings-btn" aria-label="Settings"></button></div>
+                <div class="nutmeg-content_right rightmargin"><button onclick="setFontSize()" class="nutmeg_fontsize-btn" aria-label="Settings"></button></div>
+             </div>
+        </div>
+    </div>
+    <div id=imageRail>
+        <div id=imageRailInner></div>
+    </div>
+</div>
+
+
+<div id=fontsetting class=overlay>
+    <div class=overlayBG></div>
+    <div class=inner>
+        <div class=cell>
+            <div class=settingbox>
+                <div class=overlay-header>
+                    <div class="nutmeg-content_right rightmargin"><button onclick="closeFontSize()" aria-label="Settings">确定</button></div>
+                    设置字号
+                </div>
+                <div class="fontpreferences overlay-content">
+                    <div id=extra-small class=extra-small>最小<span class="tickbg"></span></div>
+                    <div id=small class=small>小<span class="tickbg"></span></div>
+                    <div id=medium class=medium>适中<span class="tickbg"></span></div>
+                    <div id=big class=big>大<span class="tickbg"></span></div>
+                    <div id=extra-big class=extra-big>特大<span class="tickbg"></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id=setting class=overlay>
+    <div class=overlayBG></div>
+    <div class=inner>
+        <div class=cell>
+            <div class=settingbox>
+                <div class=overlay-header>
+                    <div class="nutmeg-content_right rightmargin"><button onclick="closeSetting()" class="overlay_close-btn" aria-label="Settings"></button></div>
+                    设置与帮助
+                </div>
+                <div class="nightreading">
+                    <strong>夜间模式</strong>
+                    <span class="displayvalue" onclick="switchNightReading()">
+                        <span class="ui-toggle">
+                            <span class="ui-toggle-button"></span>
+                            <span class="ui-toggle-label ui-toggle-label-on">开</span>
+                            <span class="ui-toggle-label ui-toggle-label-off">关</span>
+                        </span>
+                    </span>
+                    <span class="description">在晚上切换为夜间阅读模式，可以减小对眼睛的压力，并节约电池</span>
+                </div>
+                <div class="bgpreferences overlay-content">
+                    <strong>自选背景</strong>
+                    <div id=pink>粉色<span class="tickbg"></span></div>
+                    <div id=white>白色<span class="tickbg"></span></div>
+                </div>
+                <div class="standalonebutton"><a href="http://itunes.apple.com/app/ft-shang-xue-yuan/id493892004" target=_blank><button class="ui-light-btn">到App Store上推荐这个应用</button></a></div>
+                <div class="standalonebutton"><a href="mailto:ftchinese.feedback@gmail.com?subject=Lunch with the FT App Feedback" id="feedbackEmail"><button class="ui-light-btn">反馈问题</button></a></div>
+                <div id="testMessage"></div>
+            </div>
+        </div>
+    </div>
+</div>
 <div id=largepic class=overlay>
 	<div class=overlayBG></div>
 	<div class=inner>
@@ -77,14 +153,41 @@ ga('send', 'pageview');
     </div>
 </div>
 
+<!--
+<div class="slide contentpage" topic="目录" storyid="contentpage"><div class=page>
+    <div class="header notouchall">
+        <div class="navleftcontainer notouchall" onclick="sectionScroller.scrollBy(-$(window).width(), 0,300);return false;"><div class="subleftbg notouchall"></div></div>
+        <div class="navrightcontainer notouchall" onclick="sectionScroller.scrollBy($(window).width(), 0,300);return false;"><div class="subrightbg notouchall"></div></div>
+        <div class="navigationScroller notouchall">
+            <ul class="navigation notouchall"></ul>
+        </div>
+    </div>
+    <div class=theContent>
+        <div class="tint-pink" id=coverintro>
+            <div class=tint-inner>
+                <div style="line-height:100%;margin:0 0 15px 0;padding:0;font-weight:bold;font-size:25px;">在沪外侨眼中的上海</div>
+                <img src="http://www.ft.com/ig/sites/2015/special-reports/shanghai/media/an26a8-lr.jpg"/><br>
+
+        用了几乎不到一代人的时间，上海就把自身从一座街道狭窄、建筑破旧、商业被数十年的共产主义体制拖垮的城市，改造为一座人口2300万、遍地摩天大厦和豪华商场的未来派大都市，成为无可争议的中国金融之都。在此期间，那些曾在上世纪把上海打造为“亚洲巴黎”的欧美人也回来了（与他们一同到来的还有成千上万日本人、韩国人、台湾人和新加坡人），试图帮助这座城市实现它在21世纪的梦想，即变身为“亚洲的纽约”。
+
+            </div>
+        </div>
+        <div class="scrollPage">
+            <div class="container">
+                <div class="contentcategory"></div>
+            </div>
+        </div>
+    </div>
+</div></div>
+-->
 
 
-<div class="slide layout-5 o-bg-style-dark section-bg-2" topic="第一页"><div class="page">
+<div class="slide layout-5 o-bg-style-dark section-bg-2" topic="图片" title="图片"><div class="page">
     <div class="o-block o-text-block o-bottom o-left"> <p>从马可•波罗(Marco Polo)和忽必烈(Kublai Khan)的时代开始，中国就一直对外国人有着一种吸引力——要说眼下哪座中国城市对外国人吸引力最大，恐怕非中国风最淡的上海莫属。</p> <p>上海既有异国风情又不让人感到特别陌生，既现代又不失古韵。它吸引着世界各地想从中国经济繁荣中分一杯羹的人，而且不会让他们感到难以适应。</p> </div>
 </div></div>
 
 
-<div class="slide layout-5 o-bg-style-dark section-bg-3" topic="第一页"><div class="page">
+<div class="slide layout-5 o-bg-style-dark section-bg-3" topic="图片"><div class="page">
     <div class="video-bg">
         <video preload="auto" loop muted="muted">
             <source src="http://www.ft.com/ig/sites/2015/special-reports/shanghai/media/blinky_5-revised.mp4" type="video/mp4">
@@ -95,7 +198,7 @@ ga('send', 'pageview');
 </div></div>
 
 
-<div class="slide layout-5 o-bg-style-dark" topic="第一页" data-fixed-bg="http://www.ft.com/ig/sites/2015/special-reports/shanghai/media/an26a8-hr.jpg"><div class="page">
+<div class="slide layout-5 o-bg-style-dark" topic="图片" data-fixed-bg="http://www.ft.com/ig/sites/2015/special-reports/shanghai/media/an26a8-hr.jpg"><div class="page">
     <div class="o-block o-text-block o-bottom o-left"><p>‘对西方人来说，在华工作需要具备一套特别的技能——有时甚至对其他东亚国家的人来说也是如此’</p></div>
 </div></div>
 
@@ -103,8 +206,7 @@ ga('send', 'pageview');
 
 
 
-
-<div class="slide layout-5 black" topic="视频"><div class="page">
+<div class="slide layout-5 black" topic="视频" title="视频"><div class="page">
     <div class="videocontainer">
         <video preload="none" controls poster="http://www.ft.com/ig/sites/2015/special-reports/shanghai/media/anna_greenspan-1-mr.png">
             <source src="http://www.ft.com/ig/sites/2015/special-reports/shanghai/media/anna_greenspan.mp4" type="video/mp4" />
@@ -117,7 +219,8 @@ ga('send', 'pageview');
 
 
 
-<div class="slide" storyid="woz" topic="商业">
+
+<div class="slide" storyid="woz" topic="文章">
     <div class="page article">  
         <div class="articleviewport"><div class="articletarget"></div></div>
         <div class="fixedContent">
@@ -213,13 +316,19 @@ ga('send', 'pageview');
 </div>
 
 
-<div class="slide" topic="经济">
+<div class="slide" topic="图表" thumbnail="http://i.ftimg.net/picture/6/000053176_piclink.jpg" title='图表'>
     <div class="animation" function="usdeficit"></div>
 </div>
 
-<div class="slide" topic="经济">
+<div class="slide" topic="图表">
     <div class="animation" function="houseandstock"></div>
 </div>
+
+
+<div class="slide" topic="图表">
+    <div class="animation" function="combinationChart001"></div>
+</div>
+
 
 <div class="slide layout-2 " topic="互动测试">
     <div class=page>
@@ -236,6 +345,42 @@ ga('send', 'pageview');
 </div>
 
 
+<div class="slide layout-5" topic="表格"><div class="page">
+<table class="data-table"><caption>生活成本—最昂贵城市</caption><thead><tr></tr></thead><tbody><tr><td><strong>2015年排名</strong></td><td><strong>2014年排名</strong></td><td><strong>城市</strong></td><td><strong>所在国家</strong></td><td><strong>两居室公寓月租金（以美元计）**</strong></td><td><strong>三居室住房月租金（以美元计）**</strong></td></tr><tr><td>1</td><td>1</td><td>罗安达</td><td>安哥拉</td><td>6800</td><td>15800</td></tr><tr><td>2</td><td>3</td><td>香港</td><td>中国</td><td>6576</td><td>11863</td></tr><tr><td>3</td><td>5</td><td>苏黎世</td><td>瑞士</td><td>3963</td><td>5892</td></tr><tr><td>4</td><td>4</td><td>新加坡</td><td>新加坡</td><td>3247</td><td>6936</td></tr><tr><td>5</td><td>6</td><td>日内瓦</td><td>瑞士</td><td>3749</td><td>6213</td></tr><tr><td>6</td><td>10</td><td>上海</td><td>中国</td><td>4064</td><td>6503</td></tr><tr><td>7</td><td>11</td><td>北京</td><td>中国</td><td>3577</td><td>5284</td></tr><tr><td>8</td><td>14</td><td>首尔</td><td>韩国</td><td>3495</td><td>6808</td></tr><tr><td>9</td><td>8</td><td>伯尔尼</td><td>瑞士</td><td>2464</td><td>n/a*</td></tr><tr><td>10</td><td>2</td><td>恩贾梅纳</td><td>乍得</td><td>n/a*</td><td>2252</td></tr><tr><td colspan="6"><em>来源：美世</em>. 注释：*该地区缺少合适的房产 **未配备家具</td></tr></tbody></table>
+</div></div>
+
+
+<div class="slide layout-5 o-bg-style-dark section-bg-thanks" topic="鸣谢" data-fixed-bg="http://www.ft.com/ig/sites/2015/special-reports/shanghai/media/bar_pic140510034_high_res_-hr_lm1svfb.jpg"><div class="page">
+    <div class="o-block o-text-block o-top o-left o-font-small">
+        <h1 class="story-title text-inner normal" style="line-height:1.2em;">鸣谢：</h1>
+        <p>作者：英国《金融时报》驻上海记者帕提•沃德米尔(Patti Waldmeir)；补充报道：张嫣</p> <p>视频与图片：鲍考什•阿尔吉尔达斯(Bakas Algirdas)</p> <p>视频编辑：保罗•帕斯夸尔(Paolo Pascual)</p> <p>编辑与设计：雨果•格林哈尔希(Hugo Greenhalgh)</p> <p>制作：乔治•基里亚科斯(George Kyriakos)</p> <p>图片编辑：安迪•米尔斯(Andy Mears)、迈克尔•克拉布特里(Michael Crabtree)</p> <p>图像处理：克里斯•坎贝尔(Chris Campbell)</p> <p>统计：凯特•弗赖(Keith Fray)</p> <p>调研：阿尼娅•努斯鲍姆(Ania Nussbaum) </p> <p>图片补充：路透社(Reuters)、Alamy、Dreamstime、范克新</p> <p>译者：邢嵬、曲雯雯</p> 
+    </div>
+</div></div>
+
+
+
+<div class="slide layout-5 section-bg-thanks" topic="相关阅读"><div class="page">
+    <div class="o-block o-text-block o-top o-left o-font-small">
+        <h1 class="story-title text-inner normal" style="line-height:1.2em;">相关阅读</h1>
+        <p><strong>FT</strong>: </p>
+        <p><a href="http://www.ftchinese.com/story/001061577" target="_blank">分析：经济减速让北京陷入两难</a> </p>
+        <p><a href="http://www.ftchinese.com/story/001060251" target="_blank">上海11名官员因外滩踩踏事件受罚</a> </p>
+        <p><a href="http://www.ftchinese.com/story/001060339" target="_blank">中国人心系中式早餐</a> </p>
+        <p><strong>其他来源</strong>: </p>
+        <p><a href="https://expatexplorer.hsbc.com/survey/files/pdfs/overall-reports/2014/HSBCExpatExplorer2014report.pdf" target="_blank">Expat explorer report 2014 – HSBC</a> </p>
+        <p><a href="http://www.mercer.com/content/mercer/global/all/en/newsroom/cost-of-living-survey.html" target="_blank">Cost of living rankings 2014 – Mercer</a> </p>
+        <p><a href="http://www.rolandberger.com/media/publications/2013-02-01-rbsc-pub-MaximizingthevalueofChinasmuseums.html" target="_blank">Maximising the value of China’s museums, 2013 – Roland Berger</a> </p>
+        <p><a href="http://www.nytimes.com/2012/04/15/travel/moganshan-china-a-lofty-retreat-from-sweltering-shanghai.html?r=0" target="_blank">A lofty retreat from sweltering Shanghai – New York Times</a> </p>
+    </div>
+    <div class="o-block o-text-block o-bottom o-right o-side">
+        <img src="http://www.ft.com/ig/sites/2015/special-reports/shanghai/media/_ab_1306-lr_dsiktn9.jpg">
+    </div>
+</div></div>
+
+
+
+
+
 <!-- 所有内容结束 -->
 
 
@@ -247,10 +392,43 @@ ga('send', 'pageview');
 <script>var wheelObject = document.getElementById("o-wheel");</script>
 <!--在固定在页面的元素-->
 
+
+<div id=allads>
+    <div id="fullpageads" startPage="0" everyPage="5">
+        <!-- 全屏广告素材 -->
+            <div class="slide layout-5 fullpagead" style="background:#000;"><div class="page">
+                <img class="coverImage" src="http://m.ftchinese.com/lunch/picture/ad/datejustii.jpg">
+            </div></div>
+            <div class="slide layout-5 fullpagead" style="background:#000;"><div class="page">
+                <img class="coverImage" src="http://m.ftchinese.com/lunch/picture/ad/yachtmasterii.jpg">
+            </div></div>
+            <div class="slide layout-5 fullpagead" style="background:#000;"><div class="page">
+                <img class="coverImage" src="http://m.ftchinese.com/lunch/picture/ad/daydate.jpg">
+            </div></div>
+        <!-- 全屏广告素材结束-->
+    </div>
+    <div id="mpuads">
+        <!-- MPU广告素材-->
+            <div class="mpuad">
+                    <img src="http://m.ftchinese.com/lunch/picture/mpu/p.gif">
+            </div>
+            <div class="mpuad">
+                <img src="http://m.ftchinese.com/lunch/picture/mpu/YMII_300x250_FT.jpg">
+            </div>
+            <div class="mpuad">
+                <img src="http://m.ftchinese.com/lunch/picture/mpu/datejust_FT_300x250.jpg">
+            </div>
+            <div class="mpuad">
+                <div class="MPU tint-orange">HTML5 MPU</div>
+            </div>
+        <!-- MPU广告素材结束-->
+    </div>
+</div>
+
 </body>
 
 <script>document.getElementById("startbar").style.width="5%";</script>
-<!-- build:js scripts/demo.js?100 -->
+<!-- build:js scripts/demo.js -->
 <!-- bower:js -->
 <script src="../bower_components/fastclick/lib/fastclick.js"></script>
 <script src="../bower_components/ftcolumnflow/src/FTColumnflow.js"></script>
@@ -262,7 +440,7 @@ ga('send', 'pageview');
 <script language=javascript>
 $(function(){
     var img = new Image();
-    img.src = 'http://i.ftimg.net/picture/7/000051707_piclink.jpg';
+    img.src = 'http://www.ft.com/ig/sites/2015/special-reports/shanghai/media/blinky-4-hr_kgpjdpm.png';
     img.onload = function() { 
         openbook();
     };
@@ -454,6 +632,98 @@ $('#' + container1).highcharts({
     }]
 });
 
+
+}
+</script>
+
+
+<script>
+function combinationChart001() {
+
+    var $ani=$("#gamecontent .slide").eq(cs).find(".animation").eq(0);
+    var container1="container"+currentArticle;
+    //清空现有的图片
+    $ani.empty();
+
+    //插入图表和说明的Dom
+    $ani.css("position","relative");
+
+    $ani.append('<div class="note01"></div>');
+    $ani.find(".note01").html("组合图表");
+    var chartHeight=$(window).height();
+    var noteHeight=$ani.find(".note01").outerHeight();
+    if (noteHeight!=null && noteHeight>0) {
+        chartHeight=chartHeight-noteHeight-60;
+    } else if (chartHeight>60) {
+        chartHeight=chartHeight-60;
+    }
+    //alert(chartHeight)
+    //chartHeight=500;
+    $ani.append('<div class=container id="'+container1+'" style="height:'+chartHeight+'px;"></div>');
+    setChart();
+
+$('#' + container1).highcharts({
+        title: {
+            text: 'Combination chart'
+        },
+        xAxis: {
+            categories: ['Apples', 'Oranges', 'Pears', 'Bananas', 'Plums']
+        },
+        labels: {
+            items: [{
+                html: 'Total fruit consumption',
+                style: {
+                    left: '50px',
+                    top: '18px',
+                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'black'
+                }
+            }]
+        },
+        series: [{
+            type: 'column',
+            name: 'Jane',
+            data: [3, 2, 1, 3, 4]
+        }, {
+            type: 'column',
+            name: 'John',
+            data: [2, 3, 5, 7, 6]
+        }, {
+            type: 'column',
+            name: 'Joe',
+            data: [4, 3, 3, 9, 0]
+        }, {
+            type: 'spline',
+            name: 'Average',
+            data: [3, 2.67, 3, 6.33, 3.33],
+            marker: {
+                lineWidth: 2,
+                lineColor: Highcharts.getOptions().colors[3],
+                fillColor: 'white'
+            }
+        }, {
+            type: 'pie',
+            name: 'Total consumption',
+            data: [{
+                name: 'Jane',
+                y: 13,
+                color: Highcharts.getOptions().colors[0] // Jane's color
+            }, {
+                name: 'John',
+                y: 23,
+                color: Highcharts.getOptions().colors[1] // John's color
+            }, {
+                name: 'Joe',
+                y: 19,
+                color: Highcharts.getOptions().colors[2] // Joe's color
+            }],
+            center: [100, 80],
+            size: 100,
+            showInLegend: false,
+            dataLabels: {
+                enabled: false
+            }
+        }]
+    });
 
 }
 </script>
