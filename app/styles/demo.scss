@@ -257,7 +257,7 @@
   font-weight: 200;
   float: left;
   line-height: .7;
-  margin: 10px 5px 0 -4px;
+  margin: 10px 5px 5px -4px;
   text-rendering: optimizelegibility;
 }
 .o-text-block a:link, .o-text-block a:visited {
@@ -305,17 +305,4 @@
   .o-bg-style-dark.slide {
     font-size: 22px;
   }
-}
-
-
-// demo related styles
-/* cover page */
-.slide.section-bg-1 {
-  background-image: url(http://www.ft.com/ig/sites/2015/special-reports/shanghai/media/blinky-4-hr_kgpjdpm.png);
-}
-.slide.section-bg-2 {
-  background-image: url(http://www.ft.com/ig/sites/2015/special-reports/shanghai/media/xu6118472taichi_practitioners-hr_8hdvvwm);
-}
-.slide.section-bg-3 {
-  background-image: url(http://ig.ft.com/sites/2015/special-reports/shanghai/media/blinky-5-hr_trwu830.png);
 }

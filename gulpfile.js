@@ -197,6 +197,12 @@ gulp.task('watch', ['connect'], function () {
 });
 
 gulp.task('publish', ['build'], function () {
+  gulp.src('dist/scripts/**/*')
+    .pipe(gulp.dest('../../ft/dev_www/frontend/static/h5/scripts'));
+  gulp.src('dist/styles/**/*')
+    .pipe(gulp.dest('../../ft/dev_www/frontend/static/h5/styles'));
+  gulp.src('dist/fonts/**/*')
+    .pipe(gulp.dest('../../ft/dev_www/frontend/static/h5/fonts'));
   return gulp.src('dist/**/*')
     .pipe(gulp.dest('../ft/olizh.github.io/h5'))
     .pipe(gulp.dest('../../ft/dev_www/mobile_webroot/ad'));

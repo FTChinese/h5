@@ -1,3 +1,4 @@
+<!-- 如果您是制作新的HTML 5沉浸式报道，请直接跳到“所有内容开始” -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -138,10 +139,32 @@ ga('send', 'pageview');
 
 
 
+
+
 <div id="allcontent" style="display:none;">
 
 <!-- 所有内容开始 -->
 
+
+<!-- 仅出现在本次沉浸式报道中的Style，比如背景图片 -->
+<style>
+.slide.section-bg-1 {
+  background-image: url(http://www.ft.com/ig/sites/2015/special-reports/shanghai/media/blinky-4-hr_kgpjdpm.png);
+}
+.slide.section-bg-2 {
+  background-image: url(http://www.ft.com/ig/sites/2015/special-reports/shanghai/media/xu6118472taichi_practitioners-hr_8hdvvwm);
+}
+.slide.section-bg-3 {
+  background-image: url(http://ig.ft.com/sites/2015/special-reports/shanghai/media/blinky-5-hr_trwu830.png);
+}
+</style>
+
+
+<!-- 
+封面：背景图片会自动铺满屏幕 
+内容会水平垂直居中
+底部的credit默认靠右下对齐
+-->
 <div class="slide layout-5 o-bg-style-dark section-bg-1" topic="封面">
     <div class="page">
     <h1 class="story-title text-inner normal" style="line-height:1.2em;">在沪外侨眼中的上海</h1>
@@ -154,6 +177,8 @@ ga('send', 'pageview');
 </div>
 
 
+<!-- 目录：需要设定三个地方 -->
+<!-- 页数不多的报道可以不放目录 -->
 <div class="slide contentpage" topic="目录" storyid="contentpage"><div class=page>
     <div class="header notouchall">
         <div class="navleftcontainer notouchall" onclick="sectionScroller.scrollBy(-$(window).width(), 0,300);return false;"><div class="subleftbg notouchall"></div></div>
@@ -164,12 +189,13 @@ ga('send', 'pageview');
     </div>
     <div class=theContent>
         <div class="tint-pink" id=coverintro>
-            <div class=tint-inner>
+            <div class="tint-inner">
+                <!-- 全书的名字 -->
                 <div style="line-height:100%;margin:0 0 15px 0;padding:0;font-weight:bold;font-size:25px;">在沪外侨眼中的上海</div>
+                <!-- 图片 -->
                 <img src="http://www.ft.com/ig/sites/2015/special-reports/shanghai/media/an26a8-lr.jpg"/><br>
-
-        用了几乎不到一代人的时间，上海就把自身从一座街道狭窄、建筑破旧、商业被数十年的共产主义体制拖垮的城市，改造为一座人口2300万、遍地摩天大厦和豪华商场的未来派大都市，成为无可争议的中国金融之都。在此期间，那些曾在上世纪把上海打造为“亚洲巴黎”的欧美人也回来了（与他们一同到来的还有成千上万日本人、韩国人、台湾人和新加坡人），试图帮助这座城市实现它在21世纪的梦想，即变身为“亚洲的纽约”。
-
+                <!-- 说明 -->
+                用了几乎不到一代人的时间，上海就把自身从一座街道狭窄、建筑破旧、商业被数十年的共产主义体制拖垮的城市，改造为一座人口2300万、遍地摩天大厦和豪华商场的未来派大都市，成为无可争议的中国金融之都。在此期间，那些曾在上世纪把上海打造为“亚洲巴黎”的欧美人也回来了（与他们一同到来的还有成千上万日本人、韩国人、台湾人和新加坡人），试图帮助这座城市实现它在21世纪的梦想，即变身为“亚洲的纽约”。
             </div>
         </div>
         <div class="scrollPage">
@@ -181,12 +207,21 @@ ga('send', 'pageview');
 </div></div>
 
 
-
+<!-- 背景自动铺满屏幕 -->
+<!-- 文字块可以通过o-bottom/o-top, o-left/o-right来放置到四个角 -->
+<!-- 手机屏幕会自动适配 -->
+<!-- 请使用p标签而不是<br>来断行 -->
 <div class="slide layout-5 o-bg-style-dark section-bg-2" topic="图片" title="图片"><div class="page">
-    <div class="o-block o-text-block o-bottom o-left"> <p>从马可•波罗(Marco Polo)和忽必烈(Kublai Khan)的时代开始，中国就一直对外国人有着一种吸引力——要说眼下哪座中国城市对外国人吸引力最大，恐怕非中国风最淡的上海莫属。</p> <p>上海既有异国风情又不让人感到特别陌生，既现代又不失古韵。它吸引着世界各地想从中国经济繁荣中分一杯羹的人，而且不会让他们感到难以适应。</p> </div>
+    <div class="o-block o-text-block o-bottom o-right"> <p>从马可•波罗(Marco Polo)和忽必烈(Kublai Khan)的时代开始，中国就一直对外国人有着一种吸引力——要说眼下哪座中国城市对外国人吸引力最大，恐怕非中国风最淡的上海莫属。</p> <p>上海既有异国风情又不让人感到特别陌生，既现代又不失古韵。它吸引着世界各地想从中国经济繁荣中分一杯羹的人，而且不会让他们感到难以适应。</p> </div>
 </div></div>
 
 
+<!-- 以视频为背景 -->
+<!-- 视频设为muted，自动加载，无限循环 -->
+<!-- 在手机和iPad上，翻到这一页不播放视频，只显示背景图片(.section-bg-3) -->
+<!-- 适用于已经知道视频地址的情况 -->
+<!-- 请和技术部门或视频部门沟通，了解如何上传视频 -->
+<!-- 文字块可以通过o-bottom/o-top, o-left/o-right来放置到四个角 -->
 <div class="slide layout-5 o-bg-style-dark section-bg-3" topic="图片"><div class="page">
     <div class="video-bg">
         <video preload="auto" loop muted="muted">
@@ -198,6 +233,8 @@ ga('send', 'pageview');
 </div></div>
 
 
+<!-- 利用data-fixed-bg这个属性为这一页设一个固定背景 -->
+<!-- 在翻页时产生类似backgound-attachement的效果 -->
 <div class="slide layout-5 o-bg-style-dark" topic="图片" data-fixed-bg="http://www.ft.com/ig/sites/2015/special-reports/shanghai/media/an26a8-hr.jpg"><div class="page">
     <div class="o-block o-text-block o-bottom o-left"><p>‘对西方人来说，在华工作需要具备一套特别的技能——有时甚至对其他东亚国家的人来说也是如此’</p></div>
 </div></div>
@@ -205,7 +242,9 @@ ga('send', 'pageview');
 
 
 
-
+<!-- 视频作为内容播放 -->
+<!-- 设定poster属性，在视频播放前预览 -->
+<!-- 由于iPhone和iPad的Bug，手指放在视频上无法翻页 -->
 <div class="slide layout-5 black" topic="视频" title="视频"><div class="page">
     <div class="videocontainer">
         <video preload="none" controls poster="http://www.ft.com/ig/sites/2015/special-reports/shanghai/media/anna_greenspan-1-mr.png">
@@ -219,7 +258,8 @@ ga('send', 'pageview');
 
 
 
-
+<!-- 插入文章 -->
+<!-- 可以利用CMS的文章导出功能自动生成下方的代码 -->
 <div class="slide" storyid="woz" topic="文章">
     <div class="page article">  
         <div class="articleviewport"><div class="articletarget"></div></div>
@@ -230,9 +270,12 @@ ga('send', 'pageview');
                     </div>
                     <div class=lead>理查德•沃特斯：苹果公司联合创始人、天才工程师承认他对苹果仍然余情未了</div>
                     <div class=datestamp>2006年9月30日</div>
+                    <!-- large代表这个图片可以点击放大 -->
+                    <!-- headshot代表这个图片放置在第二栏的底部 -->
                     <img class="large headshot" src="http://i.ftimg.net/picture/9/000048719_piclink.jpg" />                       
                 </div>
-                    </div>      
+                    </div>
+        <!-- flowedContent中的内容会自动分页分栏排版，适应各种屏幕 -->
         <div class="flowedContent">
 <p>Hickory Pit烧烤店位于加州圣何塞市的一个不起眼的街区，看上去不像一个适合推心置腹的好地方。餐厅外立面是混凝土外壳，里面别有洞天，颇有上世纪50年代的风格：一排排的小摊点装饰着糖果粉和蓝色的塑料，贴面台面，荧光灯。</p>
 
@@ -316,6 +359,13 @@ ga('send', 'pageview');
 </div>
 
 
+<!-- 
+如果这一页中有一个class=animation的元素，
+翻到这一页时，会运行这个元素的function中指定的函数，
+函数的定义放在下面的字段。
+利用这个功能，再加上一个开发者，可以在一个页面上做出任何功能，
+包括图表、演示、iFrame、甚至游戏
+-->
 <div class="slide" topic="图表" thumbnail="http://i.ftimg.net/picture/6/000053176_piclink.jpg" title='图表'>
     <div class="animation" function="usdeficit"></div>
 </div>
@@ -330,6 +380,7 @@ ga('send', 'pageview');
 </div>
 
 
+<!-- 单选题 -->
 <div class="slide layout-2 " topic="互动测试">
     <div class=page>
         <div class=quiz>
@@ -344,7 +395,7 @@ ga('send', 'pageview');
     </div>
 </div>
 
-
+<!-- 表格：建议列数不要太多，以适应小屏幕 -->
 <div class="slide layout-5" topic="表格"><div class="page">
     <table class="data-table">
         <caption>生活成本—最昂贵城市</caption>
@@ -364,6 +415,7 @@ ga('send', 'pageview');
 </div></div>
 
 
+<!-- 鸣谢：其实就是固定背景的模版 -->
 <div class="slide layout-5 o-bg-style-dark section-bg-thanks" topic="鸣谢" data-fixed-bg="http://www.ft.com/ig/sites/2015/special-reports/shanghai/media/bar_pic140510034_high_res_-hr_lm1svfb.jpg"><div class="page">
     <div class="o-block o-text-block o-top o-left o-font-small">
         <h1 class="story-title text-inner normal" style="line-height:1.2em;">鸣谢：</h1>
@@ -372,7 +424,8 @@ ga('send', 'pageview');
 </div></div>
 
 
-
+<!-- 相关链接 -->
+<!-- 利用o-side这个属性，右边底部的那个图片可以在手机屏幕上自动隐藏 -->
 <div class="slide layout-5 section-bg-thanks" topic="相关阅读"><div class="page">
     <div class="o-block o-text-block o-top o-left o-font-small">
         <h1 class="story-title text-inner normal" style="line-height:1.2em;">相关阅读</h1>
@@ -453,11 +506,17 @@ ga('send', 'pageview');
 
 <script language=javascript>
 $(function(){
+    var firstImage = $('#allcontent .slide').eq(0).css('background-image') || '';
+    firstImage =firstImage.replace(/^url\(/g,'').replace(/\)$/g,'');
     var img = new Image();
-    img.src = 'http://www.ft.com/ig/sites/2015/special-reports/shanghai/media/blinky-4-hr_kgpjdpm.png';
-    img.onload = function() { 
+    if (firstImage !== '' && firstImage !== 'none') {
+        img.src = firstImage;
+        img.onload = function() { 
+            openbook();
+        };
+    } else {
         openbook();
-    };
+    }
     new FastClick(document.body);
 });
 </script>
@@ -477,6 +536,8 @@ function usdeficit() {
     $ani.css("position","relative");
 
     $ani.append('<div class="note01"></div>');
+
+    //第一个需要修改的地方：底部显示的说明文章，不要写得太长
     $ani.find(".note01").html("在80年代至今的几位总统任内，只有比尔·克林顿实现了4年的联邦预算盈余。支持者认为这是克林顿和萨默斯经济政策的功劳，反对者认为他们只是占了互联网泡沫繁荣的光（见前一张互动图）。图中可以看出2001年的9·11和2008年金融危机对政府预算的巨大影响。数据来自国会预算办公室(CBO)。");
     var chartHeight=$(window).height();
     var noteHeight=$ani.find(".note01").outerHeight();
@@ -502,11 +563,8 @@ function usdeficit() {
                 {name:'联邦政府收入',data: [19.6,19.2,17.5,17.3,17.7,17.5,18.4,18.2,18.4,18.0,17.8,17.5,17.5,18.0,18.4,18.8,19.2,19.9,19.8,20.6,19.5,17.6,16.2,16.1,17.3,18.2,18.5,17.6,15.1,15.1,15.4,15.8]},]
     });
 }
-</script>
 
 
-<script language=javascript>
-<!--Animation函数-->
 function houseandstock() {
     var $ani=$("#gamecontent .slide").eq(cs).find(".animation").eq(0);
     var container1="container"+currentArticle;
@@ -648,10 +706,7 @@ $('#' + container1).highcharts({
 
 
 }
-</script>
 
-
-<script>
 function combinationChart001() {
 
     var $ani=$("#gamecontent .slide").eq(cs).find(".animation").eq(0);
@@ -676,6 +731,7 @@ function combinationChart001() {
     $ani.append('<div class=container id="'+container1+'" style="height:'+chartHeight+'px;"></div>');
     setChart();
 
+//从highcharts.com上复制的代码，只需把第一行改为如下的代码就可以正常显示
 $('#' + container1).highcharts({
         title: {
             text: 'Combination chart'
