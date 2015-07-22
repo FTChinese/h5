@@ -29,6 +29,8 @@ ga('send', 'pageview');
 
 <div id="share-icon"><img src="http://s.ftimg.net/img/friend-share-icon.jpg" /></div>
 
+<div id="o-rotate-note"><div>旋转屏幕，查看精彩内容！</div></div>
+
 <div id="screenstart" class=opening ontouchmove="event.preventDefault();"><span><p class=booklead id="startstatus">FT中文网特别报道</p><div class="progresscontainer instartscreen"><div id="startbar" class="progressbar standardprogressbar uses3d progressbg structureprogress"></div></div><p class=booklead id="loadstatus">&nbsp;</p></span>
 
 <div class="backuplinks"><a onclick="javascript:window.location.reload()">重新加载</a></div>
@@ -45,7 +47,7 @@ ga('send', 'pageview');
 <!-- endbuild -->
 
 
-<div class="fullbody fruit" id="game">
+<div class="fullbody fruit landscapeImage" id="game">
 
 
 
@@ -58,18 +60,18 @@ ga('send', 'pageview');
 
 <div class="tap pagetitle"></div>
 
-<div id=contentRail style="">
+<div id="contentRail" style="">
     <div class="-bg-checkered">
-        <div id=toolRail>
+        <div id="toolRail">
             <div class="nutmeg-content">
-                <div class="nutmeg-content_left"><button onclick="jumptostory('contentpage')"><i aria-hidden="true">-</i><span id='index-title'>目录</span></button></div>
+                <div class="nutmeg-content_left"><button onclick="jumptostory('contentpage')" class="button-menu"><span id='index-title'>目录</span></button></div>
                 <div class="nutmeg-content_right"><button onclick="setting()" class="nutmeg_settings-btn" aria-label="Settings"></button></div>
                 <div class="nutmeg-content_right rightmargin"><button onclick="setFontSize()" class="nutmeg_fontsize-btn" aria-label="Settings"></button></div>
              </div>
         </div>
     </div>
-    <div id=imageRail>
-        <div id=imageRailInner></div>
+    <div id="imageRail">
+        <div id="imageRailInner"></div>
     </div>
 </div>
 
@@ -121,8 +123,7 @@ ga('send', 'pageview');
                     <div id=pink>粉色<span class="tickbg"></span></div>
                     <div id=white>白色<span class="tickbg"></span></div>
                 </div>
-                <div class="standalonebutton"><a href="http://itunes.apple.com/app/ft-shang-xue-yuan/id493892004" target=_blank><button class="ui-light-btn">到App Store上推荐这个应用</button></a></div>
-                <div class="standalonebutton"><a href="mailto:ftchinese.feedback@gmail.com?subject=Lunch with the FT App Feedback" id="feedbackEmail"><button class="ui-light-btn">反馈问题</button></a></div>
+                <div class="standalonebutton"><a href="mailto:ftchinese.feedback@gmail.com?subject=Feedback on FT HTML 5 Story" id="feedbackEmail"><button class="ui-light-btn">反馈问题</button></a></div>
                 <div id="testMessage"></div>
             </div>
         </div>
@@ -146,18 +147,6 @@ ga('send', 'pageview');
 <!-- 所有内容开始 -->
 
 
-<!-- 仅出现在本次沉浸式报道中的Style，比如背景图片 -->
-<style>
-.slide.section-bg-1 {
-  background-image: url(http://www.ft.com/ig/sites/2015/special-reports/shanghai/media/blinky-4-hr_kgpjdpm.png);
-}
-.slide.section-bg-2 {
-  background-image: url(http://www.ft.com/ig/sites/2015/special-reports/shanghai/media/xu6118472taichi_practitioners-hr_8hdvvwm);
-}
-.slide.section-bg-3 {
-  background-image: url(http://ig.ft.com/sites/2015/special-reports/shanghai/media/blinky-5-hr_trwu830.png);
-}
-</style>
 
 
 <!-- 
@@ -165,7 +154,7 @@ ga('send', 'pageview');
 内容会水平垂直居中
 底部的credit默认靠右下对齐
 -->
-<div class="slide layout-5 o-bg-style-dark section-bg-1" topic="封面">
+<div class="slide layout-5 o-bg-style-dark" topic="封面" style="background-image: url(http://www.ft.com/ig/sites/2015/special-reports/shanghai/media/blinky-4-hr_kgpjdpm.png);">
     <div class="page">
     <h1 class="story-title text-inner normal" style="line-height:1.2em;">在沪外侨眼中的上海</h1>
     <h2 class="story-heading text-inner small">在高薪工作机会的吸引下，世界各地的人士纷纷涌入中国的商业之都。不过，是什么因素让他们留了下来？上海的外侨在这里讲述了他们的家庭生活、上海的街头小吃以及“逃离”这座城市的故事。</h2>
@@ -211,7 +200,7 @@ ga('send', 'pageview');
 <!-- 文字块可以通过o-bottom/o-top, o-left/o-right来放置到四个角 -->
 <!-- 手机屏幕会自动适配 -->
 <!-- 请使用p标签而不是<br>来断行 -->
-<div class="slide layout-5 o-bg-style-dark section-bg-2" topic="图片" title="图片"><div class="page">
+<div class="slide layout-5 o-bg-style-dark" topic="图片" title="图片" style="background-image: url(http://www.ft.com/ig/sites/2015/special-reports/shanghai/media/xu6118472taichi_practitioners-hr_8hdvvwm);"><div class="page">
     <div class="o-block o-text-block o-bottom o-right"> <p>从马可•波罗(Marco Polo)和忽必烈(Kublai Khan)的时代开始，中国就一直对外国人有着一种吸引力——要说眼下哪座中国城市对外国人吸引力最大，恐怕非中国风最淡的上海莫属。</p> <p>上海既有异国风情又不让人感到特别陌生，既现代又不失古韵。它吸引着世界各地想从中国经济繁荣中分一杯羹的人，而且不会让他们感到难以适应。</p> </div>
 </div></div>
 
@@ -222,7 +211,7 @@ ga('send', 'pageview');
 <!-- 适用于已经知道视频地址的情况 -->
 <!-- 请和技术部门或视频部门沟通，了解如何上传视频 -->
 <!-- 文字块可以通过o-bottom/o-top, o-left/o-right来放置到四个角 -->
-<div class="slide layout-5 o-bg-style-dark section-bg-3" topic="图片"><div class="page">
+<div class="slide layout-5 o-bg-style-dark" topic="图片" style="background-image: url(http://ig.ft.com/sites/2015/special-reports/shanghai/media/blinky-5-hr_trwu830.png);"><div class="page">
     <div class="video-bg">
         <video preload="auto" loop muted="muted">
             <source src="http://www.ft.com/ig/sites/2015/special-reports/shanghai/media/blinky_5-revised.mp4" type="video/mp4">
@@ -396,7 +385,7 @@ ga('send', 'pageview');
 </div>
 
 <!-- 表格：建议列数不要太多，以适应小屏幕 -->
-<div class="slide layout-5" topic="表格"><div class="page">
+<div class="slide layout-5" topic="表格"><div class="page longPicture">
     <table class="data-table">
         <caption>生活成本—最昂贵城市</caption>
         <thead><tr></tr></thead>
@@ -493,6 +482,16 @@ ga('send', 'pageview');
 </div>
 
 </body>
+
+
+<script>
+function isIE() { return ((navigator.appName == 'Microsoft Internet Explorer') || ((navigator.appName == 'Netscape') && (new RegExp("Trident/.*rv:([0-9]{1,}[\.0-9]{0,})").exec(navigator.userAgent) != null)));}
+
+//如果是IE，不管是什么版本，都中止程序
+if (isIE() === true) {
+    document.body.innerHTML = '<h1>亲爱的用户，我们发现您使用了IE浏览器！这会给您带来严重的安全隐患！请改用Chrome或FireFox等现代浏览器来浏览FT中文网的精彩内容！</h1>';
+}
+</script>
 
 <script>document.getElementById("startbar").style.width="5%";</script>
 <!-- build:js scripts/demo.js -->

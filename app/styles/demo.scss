@@ -161,7 +161,6 @@
   .is-touch .videocontainer {
     width: 590px;
     padding-top: 333px;
-    background-color: red;
   }
 }
 
@@ -266,7 +265,7 @@
 .o-text-block a:hover, .o-text-block a:active {
   color: #000;
 }
-.o-text-block.o-side {
+.o-text-block.o-side, #o-rotate-note {
   display: none;
 }
 @media only screen and (min-width: 450px) {
@@ -304,5 +303,22 @@
 @media only screen and (min-width: 1280px) {
   .o-bg-style-dark.slide {
     font-size: 22px;
+  }
+}
+@media only screen and (max-height: 450px) and (min-width: 450px) {
+  #o-rotate-note {
+    display: table;
+    color: white;
+    width: 100%;
+    height: 100%;
+    background-color: #002F5F;
+    div {
+      display: table-cell;
+      vertical-align: middle;
+      text-align: center;
+    }
+  }
+  #game, #game.on {
+    display: none;
   }
 }

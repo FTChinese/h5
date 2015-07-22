@@ -201,8 +201,32 @@ gulp.task('publish', ['build'], function () {
     .pipe(gulp.dest('../../ft/dev_www/frontend/static/h5/scripts'));
   gulp.src('dist/styles/**/*')
     .pipe(gulp.dest('../../ft/dev_www/frontend/static/h5/styles'));
+  gulp.src('dist/images/**/*')
+    .pipe(gulp.dest('../../ft/dev_www/frontend/static/h5/images'));
   gulp.src('dist/fonts/**/*')
     .pipe(gulp.dest('../../ft/dev_www/frontend/static/h5/fonts'));
+
+  var fileName = '../../ft/dev_www/frontend/tpl/include/timestamp.html';
+  var fs = require('fs');
+  var thedatestamp = new Date().getTime();
+  fs.writeFile(fileName, thedatestamp, function(err) {
+      if(err) {
+          return console.log(err);
+      }
+      console.log(thedatestamp);
+      console.log('writen to');
+      console.log(fileName);
+  });
+  fileName = '../../ft/testing/dev_www/frontend/tpl/include/timestamp.html';
+  fs.writeFile(fileName, thedatestamp, function(err) {
+      if(err) {
+          return console.log(err);
+      }
+      console.log(thedatestamp);
+      console.log('writen to');
+      console.log(fileName);
+  });
+
   return gulp.src('dist/**/*')
     .pipe(gulp.dest('../ft/olizh.github.io/h5'))
     .pipe(gulp.dest('../../ft/dev_www/mobile_webroot/ad'));
