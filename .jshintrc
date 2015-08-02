@@ -10,13 +10,29 @@
   "latedef": true,
   "newcap": true,
   "noarg": true,
-  "quotmark": "single",
+  "quotmark": "any",
   "undef": true,
   "unused": false,
-  "strict": true,
+  "strict": false,
   "jquery": true,
   "globals": {
     "FastClick": true,
-    "FTScroller": true
+    "FTScroller": true,
+    "escape": true,
+    "Swipe": true,
+    "_scrollerOn": true,
+    "FTColumnflow": true,
+    "ga": true,
+    "playFunction": true,
+    "_clicktoTurnPage": true,
+    "console": true,
+    "playslide": true,
+    "changepage": true,
+    "organizepage": true,
+    "wheelObject": true,
+    "gFTScrollerActive": true,
+    "openRail": true,
+    "closeRail": true,
+    "switchRail": true
   }
 }
