@@ -101,8 +101,7 @@ var Highcharts;
 var rtime = new Date(1, 1, 2000, 120000);
 var timeout = false;
 var delta = 200;
-
-
+var gWebRootForVideo = '';
 
 
 function setChart() {
@@ -128,8 +127,8 @@ function setChart() {
             }
         },
         subtitle: {
-            align: 'right',
-            y: 20,
+            align: 'center',
+            y: titleSize * 2,
             style: { 
                 color: '#333333',
                 font: '12px arial,"Hiragino Sans GB","Heiti SC",STHeiti'
@@ -493,10 +492,13 @@ function paginate($theObject) {
         $fixedContent.attr("id","fixedContent"+slidenumber);
 
         if ($currentSlide.find(".article").length>0 && $articleviewport.length>0 && $articletarget.length>0) {
-            var headline = $currentSlide.find(".headline").html();
-            var leadinfo=$currentSlide.find(".lead").html();
-            var headcut=$currentSlide.find("img.headshot").attr("src");
-            var datestamp=$currentSlide.find(".datestamp").eq(0).html();
+            var headline = $currentSlide.find('.headline').html() || '';
+            var leadinfo = $currentSlide.find('.lead').html() || '';
+            var headcut = $currentSlide.find('img.headshot').attr('src') || '';
+            var headcutPosition = '';
+            var datestamp = $currentSlide.find('.datestamp').eq(0).html() || '';
+            var inlineVideo = $currentSlide.find('.fixedContent .inlinevideo').eq(0).prop('outerHTML') || '';
+            var inlineVideoClass = '';
             if (datestamp !== null && datestamp !== "") {
                 datestamp='<p class=datestamp>'+datestamp+'</p>';
             } else {
@@ -511,32 +513,107 @@ function paginate($theObject) {
                 figCaption='<figcaption><span class="icon zoombg"></span>点击看大图</figcaption>';
             }
             var mpuPage=" attach-page-3";
+            var cf = new FTColumnflow("articletarget"+slidenumber, "articleviewport"+slidenumber, {
+                    columnWidth:            300,
+                    viewportWidth:          windowWidth,
+                    viewportHeight:         coverheight,
+                    columnGap:              21,
+                    standardiseLineHeight:  true, //useful when you have subTitle or varied fonts
+                    pagePadding:            pagePadding,
+                    minFixedPadding:        0.5
+            });
+            var videoHeight = cf.layoutDimensions.columnWidth * 9 / 16 + 30;
+            var inlineImgHeight = cf.layoutDimensions.columnWidth * 3 / 4;
+            //handle images in flowed content
+            var flowedBlocks = $flowedContent.find('.midPic img, .leftPic img, .rightPic img');
+            if (flowedBlocks.length > 0) {
+                flowedBlocks.each(function(){
+                    //assume .rightPic wraps img immediately
+                    var flowedImgWidth = $(this).attr('data-width') || 0;
+                    var flowedImgHeight = $(this).attr('data-height') || 0;
+                    // var flowedImgSrc = $(this).attr('src') || '';
+                    flowedImgWidth = parseInt(flowedImgWidth, 10);
+                    flowedImgHeight = parseInt(flowedImgHeight, 10);
+                    if (flowedImgWidth > 0 && flowedImgHeight > 0) {
+                        if (cf.layoutDimensions.columnWidth > flowedImgHeight) {
+                            flowedImgHeight = flowedImgHeight;
+                        } else {
+                            flowedImgHeight = cf.layoutDimensions.columnWidth * flowedImgHeight / flowedImgWidth;
+                        }
+                        flowedImgHeight = flowedImgHeight + 28;
+                        //alert (flowedImgHeight);
+                    } else {
+                        flowedImgHeight = inlineImgHeight;
+                    }
+                    $(this).parent().css({
+                        'width': cf.layoutDimensions.columnWidth, 
+                        'height': flowedImgHeight
+                    });
+                });
+            }
+            var flowedVideoContainer = $flowedContent.find('.inlinevideo');
+            if (flowedVideoContainer.length > 0) {
+                flowedVideoContainer.css({
+                    'width': cf.layoutDimensions.columnWidth, 
+                    'height': videoHeight
+                });
+            }
             //针对屏幕大小、有无自定义固定内容、页面内广告配置等处理fiexedContent内容  var mpuAmount=0;var currentMPU=0;
             if ($currentSlide.find(".articleinfo").length>0) {
                 if (screenType === "small") {
                     var headlinePage="";
-                    if (headcut !== null && headcut !== "") {
-                        fixedContent = '<div class="anchor-top-col-1 headcut" style="display:table;height:' + coverheight + 'px;"><div style="display:table-cell;vertical-align:middle;text-align:center;"><img src="' + headcut + '" style="max-width:100%;max-height:' + imageMaxHeight + 'px" /><div style="text-align:center;font-weight:bold;">' + headline + '</div></div></div>'; 
+                    if (headcut !== "") {
+                        headcutPosition = 'anchor-top-col-1';
+                        fixedContent = '<div class="' + headcutPosition + ' headcut" style="display:table;height:' + coverheight + 'px;"><div style="display:table-cell;vertical-align:middle;text-align:center;"><img src="' + headcut + '" style="max-width:100%;max-height:' + imageMaxHeight + 'px" /><div style="text-align:center;font-weight:bold;">' + headline + '</div></div></div>'; 
                         headlinePage=" attach-page-2";
-                        mpuPage=" attach-page-3";
+                        if (inlineVideo !== '') {
+                            inlineVideoClass = 'attach-page-3';
+                            mpuPage = ' attach-page-4';
+                        } else {
+                            mpuPage = ' attach-page-3';
+                        }
                     } else {
-                        mpuPage=" attach-page-2";
+                        if (inlineVideo !== '') {
+                            inlineVideoClass = 'attach-page-1';
+                            mpuPage = ' attach-page-3';
+                        } else {
+                            mpuPage = ' attach-page-3';
+                        }
                     }
                     fixedContent += '<div class="anchor-top-col-1' + headlinePage + '"><div class=headline style="text-align:center;font-size:25px;font-weight:bold">' + headline + '</div><div class=lead>' + leadinfo + '</div>'+datestamp+'</div>';
                     $currentSlide.find(".headcut").css({"height":coverheight+"px"});	
                 } else {
                     fixedContent = '<div class="col-span-2"><div class=headline style="text-align:center;">' + headline + '</div><div class=lead>' + leadinfo + '</div>'+datestamp+'</div>';
-                    if (headcut !== null && headcut !== "") {
+                    if (headcut !== "") {
                         imageMaxHeight=parseInt(coverheight - 200);
                         var imageHeight=431;
                         if ($("#game").hasClass("landscapeImage") === true) {
                             imageHeight=200;
                         }
-                        fixedContent += '<div class="anchor-bottom-col-2" style="display:table;"><figure style="display:table-cell;text-align:center;height:'+imageHeight+'px;width:300px;vertical-align:bottom;"><img'+large+' src="' + headcut + '" style="max-width:100%;max-height:'+imageMaxHeight+'px;" />'+figCaption+'</figure></div>';
-                        mpuPage=" attach-page-2";
+                        if ($currentSlide.hasClass('list') === true) {
+                            headcutPosition = 'anchor-bottom-col-8 animated fadeIn';
+                        } else {
+                            headcutPosition = 'anchor-bottom-col-2';
+                        }
+                        fixedContent += '<div class="' + headcutPosition + '" style="display:table;"><figure style="display:table-cell;text-align:center;height:'+imageHeight+'px;width:300px;vertical-align:bottom;"><img'+large+' src="' + headcut + '" style="max-width:100%;max-height:'+imageMaxHeight+'px;" />'+figCaption+'</figure></div>';
+                        if (inlineVideo !== '') {
+                            inlineVideoClass = 'attach-page-3';
+                            mpuPage = ' attach-page-3';
+                        } else {
+                            mpuPage = ' attach-page-2';
+                        }
                     } else {
-                        mpuPage="";
+                        if (inlineVideo !== '') {
+                            inlineVideoClass = 'attach-page-1';
+                            mpuPage = ' attach-page-2';
+                        } else {
+                            mpuPage="";
+                        }
                     }
+                }
+                if (inlineVideo !== '') {
+                    inlineVideoClass += ' inline-video-container anchor-bottom-col-2';
+                    fixedContent += '<div class="' + inlineVideoClass + '" style="width: '+ cf.layoutDimensions.columnWidth +'px; height: ' + videoHeight + 'px;">' + inlineVideo + '</div>';
                 }
                 //如果没有自定义的fixedContent，才投放MPU广告
                 if ($currentSlide.find(".myFixedContent").length>0) {
@@ -558,15 +635,7 @@ function paginate($theObject) {
             }
 
             $currentSlide.find(".flowedContent .datestamp,.flowedContent .byline").remove();
-            var cf = new FTColumnflow("articletarget"+slidenumber, "articleviewport"+slidenumber, {
-                    columnWidth:            300,
-                    viewportWidth:          windowWidth,
-                    viewportHeight:         coverheight,
-                    columnGap:              21,
-                    standardiseLineHeight:  true, //useful when you have subTitle or varied fonts
-                    pagePadding:            pagePadding,
-                    minFixedPadding:        0.5
-            });
+            //flow the content to create the view
             cf.flow(document.getElementById("flowedContent"+slidenumber), fixedContent);
             $currentSlide.hide();
             $currentSlide.find(".cf-preload,.cf-preload-fixed,.fixedContent,.flowedContent").remove();
@@ -1140,6 +1209,7 @@ function openbook() {
         var startPage=$('#fullpageads').attr('startPage');
         var everyPage=$('#fullpageads').attr('everyPage');
         var fixedBG = $(this).attr('data-fixed-bg') || '';
+        var fixedBGPosition = $(this).attr('data-fixed-bg-position') || '';
         startPage=parseInt(startPage, 10);
         everyPage=parseInt(everyPage, 10);
         //必须要在文章后面才能加广告，唯一的例外是第一个广告
@@ -1161,6 +1231,14 @@ function openbook() {
             $(this).attr('data-fixed-bg-0', fixedBG);
             $(this).prev().attr('data-fixed-bg-0', fixedBG);
             $(this).next().attr('data-fixed-bg-0', fixedBG);
+        }
+
+        //固定背景图片的对齐方式
+        if (fixedBGPosition !== '') {
+            $(this).attr('data-fixed-bg-position-0', fixedBGPosition);
+            $(this).prev().attr('data-fixed-bg-position-0', fixedBGPosition);
+            $(this).next().attr('data-fixed-bg-position-0', fixedBGPosition);
+            //alert (fixedBGPosition);
         }
     });
     //获取MPU广告的数量
@@ -1201,8 +1279,10 @@ function openbook() {
     //目录页的简介设为黑色字
     $("#allcontent .slide[topic = '目录'] .contentintro").css("color","#000");
     //删除文章中的图片、时间戳和作者名
-    $("#allcontent .flowedContent img,#allcontent .flowedContent .byline").remove();
-        var currenttopic = "";
+    $("#allcontent .flowedContent .byline").remove();
+    // add nowrap class for inline images
+    $("#allcontent .flowedContent").find('img, .leftPic, .rightPic, .midPic, .inlinevideo').addClass('nowrap');
+    var currenttopic = "";
     var storyid = "";
     var n = 0;
     
@@ -1242,6 +1322,7 @@ function openbook() {
     var contentpage = 0;
     //$("#allcontent .contentcategory").append("<div class=headline>目录</div>");
     $("#allcontent .slide").each(function(i){
+        var newheadline;
         $(this).find(".question").prepend("<b>小测试</b>");
         $(this).find(".option p").addClass("notouchall").append("<div class='optionButton notouchall'></div>");
         if ($(this).find(".option p[value][type = 'r']").length>0) {
@@ -1256,15 +1337,15 @@ function openbook() {
             $(this).find(".flowedContent .datestamp").appendTo($(this).find(".articleinfo"));
         }
         if ($(this).find(".articleinfo .headline").html()) {
-        var newheadline=$(this).find(".articleinfo .headline").html();
-        $(this).find(".articleinfo .headline").html(newheadline.replace(/与(.*)共进.*/g,"$1"));
+            newheadline=$(this).find(".articleinfo .headline").html();
+            $(this).find(".articleinfo .headline").html(newheadline.replace(/与(.*)共进.*/g,"$1"));
         }
         $(this).find(".flowedContent .datestamp").remove();        
         if ($(this).find(".contentcategory").length>0){contentpage = contentpage+1;}
         $(this).attr("n1",i);
         if ($(this).attr("topic") && $(this).attr("topic") !== "" && $(this).attr("topic") !== currenttopic) {
             currenttopic = $(this).attr("topic");
-            if (i>0 && currenttopic !== "目录"&& currenttopic !== "记分卡"&& contentpage === 1 && $(this).find(".contentcategory").length === 0) {
+            if (i>0 && currenttopic !== "目录"&& currenttopic !== "记分卡" && contentpage === 1 && $(this).find(".contentcategory").length === 0) {
                 $("#allcontent .contentcategory").append('<p class="category Section'+i+'" n1target='+i+' onclick="jumptoarticle('+i+',0)">'+currenttopic+'</p>');
 				if (currenttopic !== "目录") {
 					$("#allcontent ul.navigation").append('<li class="notouchall notouch section_'+i+'" onclick="scrollToSection('+i+')">'+currenttopic+'</li>');
@@ -1288,6 +1369,8 @@ function openbook() {
 		if ($(this).attr('title') && ($(this).css('background-image') !== 'none' || $(this).attr('thumbnail') || $(this).attr('data-fixed-bg'))) {
             var thumbImg = $(this).attr('thumbnail') || $(this).attr('data-fixed-bg') || $(this).css('background-image');
             //console.log ($(this).attr('title') + ': ' + thumbImg);
+            headshotImg = thumbImg.replace(/^url\(/, '').replace(/\)$/, '');
+            headshotImg = '<img src="' + headshotImg + '" class=rightimage>';
             if (thumbImg.indexOf('url') < 0) {
                 thumbImg = 'url(' + thumbImg + ')';
             }
@@ -1305,10 +1388,19 @@ function openbook() {
         
 
         var lead = "";
-        if ($(this).find(".excerpt .lead,.article .lead,.page .lead").length>0) {lead = "<div class = contentlead>"+$(this).find(".excerpt .lead,.article .lead,.page .lead").eq(0).html()+"</div>";}
-        if ($(this).find(".excerpt .headline,.article .headline,.page .headline").length>0 && i>0 && currenttopic !== "目录" && currenttopic !== "前言" && currenttopic !== "介绍" && contentpage === 1 && $(this).find(".contentcategory").length === 0) {
-            $("#allcontent .contentcategory").append('<div class=contentheadline n1target = '+i+' onclick="jumptoarticle('+i+',0)">'+headshotImg+'<b>'+$(this).find('.headline').html()+'</b>'+lead+'<div class=clearfloat></div></div>');
+        if ($(this).attr('lead') && $(this).attr('lead') !== '') {
+            lead = "<div class = contentlead>"+$(this).attr('lead')+"</div>";
+        } else if ($(this).find(".excerpt .lead,.article .lead,.page .lead").length>0) {
+            lead = "<div class = contentlead>"+$(this).find(".excerpt .lead,.article .lead,.page .lead").eq(0).html()+"</div>";
         }
+        if ($(this).attr('title') && $(this).attr('title') !== '') {
+            $("#allcontent .contentcategory").append('<div class=contentheadline n1target = '+i+' onclick="jumptoarticle('+i+',0)">'+headshotImg+'<b>'+$(this).attr('title')+'</b>'+lead+'<div class=clearfloat></div></div>');
+            //alert ($(this).attr('title'));
+        } else if ($(this).find(".excerpt .headline,.article .headline,.page .headline").length>0 && i>0 && contentpage === 1 && $(this).find(".contentcategory").length === 0) {
+            $("#allcontent .contentcategory").append('<div class=contentheadline n1target = '+i+' onclick="jumptoarticle('+i+',0)">'+headshotImg+'<b>'+$(this).find('.headline').html()+'</b>'+lead+'<div class=clearfloat></div></div>');
+            //alert ($(this).find('.headline').html());
+        }
+        //alert (lead);
         
 
     });
@@ -1673,9 +1765,11 @@ function playslide(slidenumber) {
     cs = parseInt(cs, 10);
     var gameContent = $("#gamecontent");
     var fixedBG = '';
+    var fixedBGPosition = '';
     var $currentSlide = $("#gamecontent .slide").eq(slidenumber);
     var currentArticleNumber=$currentSlide.attr("articlenumber");
     var videoInSlide;
+    var ccVideoDiv;
     var n1Number;
     currentArticleNumber=parseInt(currentArticleNumber);
     n1Number=$currentSlide.attr("n1");
@@ -1734,6 +1828,34 @@ function playslide(slidenumber) {
         $currentSlide.find("video").css({"width":0,"height":0}).addClass("on").animate({"width":w+"px","height":h+"px"},500,"easeInOutCubic");
     }
     
+    // if there are CCVideo tag in this slide
+    ccVideoDiv = $currentSlide.find('.inlinevideo');
+    if (ccVideoDiv.length > 0) {
+        ccVideoDiv.each(function() {
+            var touchOverlay = '';
+            var touchClickClass = '';
+            var videoContainerId = '';
+            if ($(this).attr('vid') !== '') {
+                videoContainerId = 'story-vid-' + $(this).attr('vid');
+                $(this).addClass('o-responsive-video-container').addClass(touchClickClass).html('<div class="o-responsive-video-wrapper-outer"><div class="o-responsive-video-wrapper-inner"><iframe height="100%" width="100%" src="' + gWebRootForVideo + '/index.php/ft/video/' + $(this).attr('vid') + '?i=1&w=100%&h=100%&autostart=false" scrolling="no" frameborder="0" allowfullscreen=""></iframe></div>' + touchOverlay + '</div><a class="o-responsive-video-caption" id="' + videoContainerId + '">' + $(this).attr('title') + '</a></div>');
+                /*
+                if (deviceType !== 'other') {
+                    $currentSlide.find('.page').css('position', 'relative').remove('.arrow-prev, .arrow-next').append('<a class="arrow-prev on" href="#"><div></div></a><a class="arrow-next on" href="#"><div></div></a>');
+                    $currentSlide.find('.arrow-prev,.arrow-next').bind('click', function() {
+                        var arrowId = $(this).attr("class");
+                        if (arrowId === "arrow-prev") {
+                            slider.goprev();
+                        } else {
+                            slider.gonext();
+                        }
+                    });
+                }
+                */
+            }
+        });
+    }
+
+
 
 
     //如果这个slide是自定义的动画，则播出
@@ -1749,6 +1871,17 @@ function playslide(slidenumber) {
     } else {
         gameContent.css({'background-image':'none','background-color':'#333'});
     }
+
+    //自定义固定图片的定位方式
+    fixedBGPosition = $currentSlide.attr('data-fixed-bg-position-0') || '';
+    if (fixedBGPosition !== '') {
+        gameContent.css('background-position', fixedBGPosition);
+        //alert (fixedBGPosition);
+    } else {
+        gameContent.css('background-position', 'center center');
+    }
+
+
     
 
     //连锁反应
@@ -1876,11 +2009,14 @@ function playslide(slidenumber) {
 
     
     //处理高度超过屏幕的菜单和图片
+
     var scrollFood=0;
-    if ($currentSlide.find(".food.nowrap").length>0 || $currentSlide.find(".longPicture").length>0 || $currentSlide.find(".data-table").length>0) {
+    if ($currentSlide.find(".food.nowrap").length>0 || $currentSlide.find(".longPicture").length>0 || $currentSlide.find("table").length>0) {
         var currentFood=$currentSlide.find(".food.nowrap, .longPicture").eq(0);
         var foodMaxHeight=coverheight-50;
-        if ($currentSlide.find(".longPicture").length>0) {foodMaxHeight=$(window).height();}
+        if ($currentSlide.find(".longPicture").length>0) {
+            foodMaxHeight=$(window).height();
+        }
         if (foodMaxHeight>0 && currentFood.outerHeight()>foodMaxHeight) {
             scrollFood=1;
             currentFood.css({"height":foodMaxHeight+"px","overflow":"hidden","display":"block"});
@@ -2090,7 +2226,10 @@ function gaTrack(g,h,i,o){var f = 1000000000,k = c(f,9999999999),a = c(10000000,
 
 
 
-
+//在本地测试
+if (window.location.hostname.indexOf('ftchinese.com') < 0 && window.location.hostname.indexOf('ftmailbox.com') < 0) {
+    gWebRootForVideo = 'http://m.ftchinese.com';
+}
 
 uniqueL = c(1000000000,2147483647);
 uniqueK = c(1000000000,9999999999);

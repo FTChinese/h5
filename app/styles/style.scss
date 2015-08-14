@@ -43,7 +43,11 @@ img,input {border:medium none;}
     left:24px;top:135px;width:100px;height:25px;font-weight:bold;font-size:19px;text-align:center;
 }
 #swipe,#gamecontent{width:100%;}
-#gamecontent,#game,#screenstart.success{background:#FFF1E0;background-size:cover;}
+#gamecontent,#game,#screenstart.success{
+    background-color:#FFF1E0;
+    background-size:cover;
+    background-position: center center;
+}
 #game {position:relative;}
 .slide,.slide.pink,.night #gamecontent .articleviewport img,.night .contentheadline img,.night #screenstart.success img{background:#FFF1E0;}
 .slide.white {background:#FFF;}
@@ -85,6 +89,10 @@ box-shadow: 0 1px 2px rgba(255,255,255,0.2),inset -1px -1px rgba(255,255,255,0.3
 .slide.on{display:table-cell;-webkit-transition-timing-function:CubicBezier(0, 0.5, 0.5, 1);}
 .slide p {text-indent:2em;line-height:162%;}
 .slide p.continuation,.slide .food p{text-indent:0;}
+.slide.list p {
+    text-indent: 0;
+    margin-bottom: 1em;
+}
 .slide .food {background:#F6E9D8;padding:5%;margin-top:15px;}
 .title {text-align:center;line-height:162%;padding:24px 0 24px 0;vertical-align:baseline;}
 
@@ -572,6 +580,37 @@ background-image: linear-gradient(top, #9d9793 0%,#766e68 100%);
 //text-shadow: 0 -1px 0 #000;
 padding:0 9px;
 }
+button.red {
+    background: #9E2F50;
+}
+button.blue {
+    background: #237AAC;
+}
+button.orange{
+    background-color:orange;
+}
+button.green{
+    background-color:#196960;
+}
+button.purple{
+    background-color:purple;
+}
+button.grey{
+    background:#E4DFCB;
+}
+button.black{
+    background-color:#000;
+}
+
+#gamecontent button.big {
+    font-size: 20px;
+    height: 44px;
+    border: medium none;
+    padding: 0 14px;
+    text-shadow: 0 0 0 #FFF;
+    margin-bottom: 14px;
+    color: white;
+}
 
 .cherry_button {
 font-size: 36px;
@@ -676,6 +715,9 @@ font-weight:normal;
 .hint {position:absolute;top:0;left:0;width:300px;height:35px;line-height:35px;border-width:0 2px 2px 0;border-color:#000;text-align:center;background:rgba(0,0,0,.7);color:#FFF;}
 
 .chartnote{width:30px;height:30px;line-height:30px;-webkit-border-radius:15px;-moz-border-radius:15px;border-radius:15px;font-weight:bold;color:#FFF;text-align:center;font-family:arial;/*font-size:23px;*/background-color:orange;-webkit-box-shadow:2px 2px 5px #666;-moz-box-shadow:2px 2px 5px #666;}
+.highcharts-container>svg>text:last-child {
+    display:none;
+}
 .fullpage sup{color:orange;font-family:georgia;font-size:12px;}
 
 
@@ -936,7 +978,7 @@ opacity:0;
 .pagenumber {color:#FFF;font-size:14px;left:100px;top:0;height:38px;line-height:38px;font-family:arial;}
 .headline {font-weight:bold;font-size:25px;line-height:162%;}
 .article .headline{font-size:40px;line-height:120%;margin:0;padding: 10px 0 15px 0;}
-.lead{color:#777;font-size:17px;}
+.lead{color:#777;font-size:17px;text-align:center;}
 .subTitle{font-size:1.05em;}
 .contentauthor {display:none;}
 .category {font-weight:bold;color:#9b164f;}
@@ -995,6 +1037,17 @@ opacity:0;
 
 #booktopbar,.topicbar,.topicbar.on{display:none;}
 
+.rightPic, .leftPic, .midPic{
+    font-size:12px;
+    color:#777;
+    overflow: hidden;
+    text-align: center;
+    img {
+        display:block;
+        margin: 0 auto 10px auto;
+    }
+}
+
 
 .arrow-prev, .arrow-next {
     position:absolute;
@@ -1003,6 +1056,7 @@ opacity:0;
     width:44px;
     cursor:pointer;
     display:block;
+    
 }
 .arrow-prev div, .arrow-next div {
     position:absolute;
@@ -1010,8 +1064,19 @@ opacity:0;
     height:62px;
     width:44px;
     margin-top:-31px;
+
 }
-.arrow-prev:hover div, .arrow-prev:active div, .arrow-next:hover div, .arrow-next:active div, .article-0 .arrow-next div {
+.arrow-prev.on , .arrow-next.on {
+    top: auto;
+    bottom: 0;
+    height: 80px;
+    div {
+        top: auto;
+        bottom: 14px;
+        margin-top: 0;
+    }
+}
+.arrow-prev.on div, .arrow-next.on div, .arrow-prev:hover div, .arrow-prev:active div, .arrow-next:hover div, .arrow-next:active div, .article-0 .arrow-next div {
     background-color:#333;
     background-image:url(http://s.ftimg.net/img/nav_sprite.png);
 } 

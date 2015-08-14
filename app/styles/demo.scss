@@ -110,9 +110,10 @@
 
 
 /* background style */
-.o-bg-style-dark.slide {
+#gamecontent .o-bg-style-dark.slide {
 	color: white;
-  background: #212121 no-repeat center center;
+  background-repeat: no-repeat;
+  background-position: center center;
   background-size: cover;
   text-shadow: 0 2px 0 rgba(0,0,0,0.5);
   text-rendering: optimizeLegibility;
@@ -122,47 +123,7 @@
   }
 }
 
-/* video on different devices */
-.video-bg, .is-desktop .videocontainer {
-  position: absolute;
-  top: 0; 
-  right: 0; 
-  bottom: 0; 
-  left: 0;
-  overflow: hidden;
-}
-.video-bg > video, .is-desktop .videocontainer > video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-.videocontainer{
-    display:block;
-    margin:auto;
-    position:relative;
-    width: 100%;
-    height: 0;
-    padding-top: 56.25%;
-}
-.videocontainer video{
-    width:100%;
-    height:100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right:0;
-}
-.videocontainer video.on{
-    display:block;
-}
-@media (min-width: 590px) {
-  .is-touch .videocontainer {
-    width: 590px;
-    padding-top: 333px;
-  }
-}
+
 
 /* 1. No object-fit support: */
 @media (min-aspect-ratio: 16/9) {

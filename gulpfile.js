@@ -124,6 +124,18 @@ gulp.task('api', function () {
     .pipe(gulp.dest('dist/api'));
 });
 
+gulp.task('map', function () {
+  return gulp.src('./bower_components/custommap/**/*')
+    .pipe(gulp.dest('dist/map'));
+});
+
+gulp.task('map', function () {
+  gulp.src('./bower_components/custommap/**/*')
+    //.pipe(gulp.dest('app/map'))
+    .pipe(gulp.dest('../../ft/dev_www/frontend/static/h5/map'));
+});
+
+
 gulp.task('fonts', function () {
   return gulp.src(require('main-bower-files')().concat('app/fonts/**/*'))
     .pipe($.filter('**/*.{eot,svg,ttf,woff}'))
@@ -232,7 +244,10 @@ gulp.task('publish', ['build'], function () {
     .pipe(gulp.dest('../../ft/dev_www/mobile_webroot/ad'));
 });
 
-gulp.task('build', ['jshint', 'html', 'images', 'fonts', 'extras', 'api'], function () {
+
+
+
+gulp.task('build', ['jshint', 'html', 'images', 'fonts', 'extras', 'api', 'map'], function () {
   return gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
 });
 
