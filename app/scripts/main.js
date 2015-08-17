@@ -122,8 +122,8 @@ function setChart() {
             align : 'center',
             style: { 
                 color: '#333',
-                font: 'bold '+titleSize+'px arial,"Hiragino Sans GB","Heiti SC",STHeiti',
-                lineHeight:'162%'
+                font: 'bold '+titleSize+'px arial,"Hiragino Sans GB","Heiti SC",STHeiti'
+                //lineHeight:'162%'
             }
         },
         subtitle: {

@@ -229,6 +229,12 @@
 .o-text-block.o-side, #o-rotate-note {
   display: none;
 }
+.o-credit {
+  font-size: 0.8em;
+  font-weight: normal;
+  text-align: right;
+  text-shadow: none;
+}
 @media only screen and (min-width: 450px) {
   .o-bg-style-dark.slide {
     font-size: 18px;
