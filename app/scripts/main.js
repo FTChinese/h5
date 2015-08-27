@@ -107,7 +107,10 @@ var gWebRootForVideo = '';
 function setChart() {
     var titleSize=25;
     var enableLegend=true;
-    if ($(window).width()<=600) {titleSize=17;enableLegend=false;}
+    if ($(window).width()<=600) {
+        titleSize=17;
+        //enableLegend=false;
+    }
     FTChartStyle = {
         colors: ['#9e2f50', '#4781aa', '#eda45e', '#a6a471', '#736e7e', '#94826b', '#936971', '#c36256', '#8ab5cd'],
         chart: {
@@ -122,6 +125,7 @@ function setChart() {
             align : 'center',
             style: { 
                 color: '#333',
+                padding: '0 14px 0 14px',
                 font: 'bold '+titleSize+'px arial,"Hiragino Sans GB","Heiti SC",STHeiti'
                 //lineHeight:'162%'
             }
@@ -249,8 +253,10 @@ function setChart() {
     };
     highchartsOptions = Highcharts.setOptions(FTChartStyle);
 }
-function addNote(noteContent) {
+function addNote(noteContent, notePosition) {
   var $ani=$("#gamecontent .slide").eq(cs).find(".animation").eq(0);
+  var noteClass = '';
+  var chartMargin = '';
   gChartId="container"+currentArticle;
 
   //console.log ('container:' + container1);
@@ -258,19 +264,28 @@ function addNote(noteContent) {
   $ani.empty();
 
   //插入图表和说明的Dom
+  if (typeof notePosition !== 'undefined' && notePosition !== '') {
+    noteClass = ' ' + notePosition;
+  }
   $ani.css("position","relative");
-  $ani.append('<div class="note01"></div>');
+  $ani.append('<div class="note01' + noteClass + '"></div>');
 
   //第一个需要修改的地方：底部显示的说明文章，不要写得太长
   $ani.find(".note01").html(noteContent);
   var chartHeight = $(window).height();
   var noteHeight = $ani.find(".note01").outerHeight();
   if (noteHeight !== null && noteHeight > 0) {
-      chartHeight = chartHeight - noteHeight - 60;
+    chartHeight = chartHeight - noteHeight - 60;
   } else if (chartHeight > 60) {
-      chartHeight = chartHeight - 60;
+    chartHeight = chartHeight - 60;
   }
-  $ani.append('<div class=container id="' + gChartId + '" style="height:' + chartHeight + 'px;"></div>');
+
+  if (noteClass === ' top') {
+    noteHeight = noteHeight + 24;
+    chartMargin = 'margin-top: ' + noteHeight + 'px;';
+  }
+
+  $ani.append('<div class=container id="' + gChartId + '" style="height:' + chartHeight + 'px;' + chartMargin + '"></div>');
   setChart();
 }
 
