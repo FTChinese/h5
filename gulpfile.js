@@ -124,10 +124,6 @@ gulp.task('api', function () {
     .pipe(gulp.dest('dist/api'));
 });
 
-gulp.task('map', function () {
-  return gulp.src('./bower_components/custommap/**/*')
-    .pipe(gulp.dest('dist/map'));
-});
 
 gulp.task('map', function () {
   gulp.src('./bower_components/custommap/**/*')

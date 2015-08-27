@@ -50,6 +50,7 @@ function reviewPanel(e) {
 
 //alert ('yes');
 
+
 var gFTScrollerActive = false;
 var gChartId = '';
 //全局变量,所有slide的数量，现在播放的slide号码，当前slide下的action数量，当前action号码
@@ -126,7 +127,7 @@ function setChart() {
             style: { 
                 color: '#333',
                 padding: '0 14px 0 14px',
-                font: 'bold '+titleSize+'px arial,"Hiragino Sans GB","Heiti SC",STHeiti'
+                font: 'bold '+titleSize+'px arial,"Hiragino Sans GB","Heiti SC",STHeiti,"Microsoft Yahei",SimSun'
                 //lineHeight:'162%'
             }
         },
@@ -240,6 +241,14 @@ function setChart() {
         labels: {
             style: {
                 color: '#333'
+            }
+        },
+        credits: {
+            position: {
+                align: 'right',
+                x: -14,
+                verticalAlign: 'bottom',
+                y: -3
             }
         },
         tooltip: {
@@ -737,10 +746,12 @@ function articlepage() {
         startSlide:startSlide
     });
     if (isTouchDevice() === false) {//if you are on a none-touch device, add click functions
+        /*
         $("#swipe").click(function(e){
-        if (/\b(notouch|notouchall|notouchmove|notouchstart|notouchend)\b/.test(e.target.className)) {//如果是点击Navigation横滚动条一类的object，则不翻页，也不调出底部滑轨
-            return;
-        }
+            
+            if (/\b(notouch|notouchall|notouchmove|notouchstart|notouchend)\b/.test(e.target.className)) {//如果是点击Navigation横滚动条一类的object，则不翻页，也不调出底部滑轨
+                return;
+            }
             var touchX = e.pageX/slider.width;
             if (touchX<=0.2) {
                 slider.goprev();
@@ -748,10 +759,19 @@ function articlepage() {
                 slider.gonext();
             } else {
 				try{
-					switchRail();
+					//switchRail();
 				}catch(err){
 				}
 			}
+            
+        });
+        */
+        $("#swipe .arrow-prev div, #swipe .arrow-next div").click(function(e){
+            if ($(this).parent().hasClass('arrow-prev') === true) {
+                slider.goprev();
+            } else {
+                slider.gonext();
+            }
         });
     }
 }
@@ -1233,6 +1253,7 @@ function openbook() {
                 adcount=0;
             }
             $("#fullpageads .slide").eq(adcount).clone().insertAfter($(this));
+            //alert (adcount);
             adcount=adcount+1;
         }
         //如果是iOS和安卓等移动设备，则去除背景的Video
@@ -2026,23 +2047,27 @@ function playslide(slidenumber) {
     //处理高度超过屏幕的菜单和图片
 
     var scrollFood=0;
-    if ($currentSlide.find(".food.nowrap").length>0 || $currentSlide.find(".longPicture").length>0 || $currentSlide.find("table").length>0) {
-        var currentFood=$currentSlide.find(".food.nowrap, .longPicture").eq(0);
+    if ($currentSlide.find(".food.nowrap").length>0 || $currentSlide.find(".longPicture").length>0 || $currentSlide.find(".o-text-block").length>0 || $currentSlide.find("table").length>0) {
+        var currentFood=$currentSlide.find(".food.nowrap, .longPicture, .o-text-block").eq(0);
         var foodMaxHeight=coverheight-50;
         if ($currentSlide.find(".longPicture").length>0) {
             foodMaxHeight=$(window).height();
         }
+        //alert (foodMaxHeight);
         if (foodMaxHeight>0 && currentFood.outerHeight()>foodMaxHeight) {
             scrollFood=1;
             currentFood.css({"height":foodMaxHeight+"px","overflow":"hidden","display":"block"});
             currentFood.attr("id","foodScroller"+currentArticleNumber);
+            
             foodScroller = new FTScroller(document.getElementById("foodScroller"+currentArticleNumber), {
                 scrollingX: false,
-                snapping: true,
+                snapping: false,
                 bouncing: false,
                 scrollbars: true,
                 windowScrollingActiveFlag: 'gFTScrollerActive'
             });
+            
+            //alert (foodScroller.scrollHeight);
         }
     }
     

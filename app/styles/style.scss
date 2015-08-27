@@ -1060,19 +1060,25 @@ opacity:0;
 
 .arrow-prev, .arrow-next {
     position:absolute;
-    top:0;
-    bottom:0;
+    top:50%;
+    height:62px;
     width:44px;
     cursor:pointer;
     display:block;
+    margin-top: -31px;
     
 }
 .arrow-prev div, .arrow-next div {
+    width: 100%;
+    height: 100%;
+
+    /*
     position:absolute;
     top:50%;
     height:62px;
     width:44px;
     margin-top:-31px;
+    */
 
 }
 .arrow-prev.on , .arrow-next.on {
