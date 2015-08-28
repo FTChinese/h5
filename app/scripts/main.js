@@ -1957,7 +1957,7 @@ function playslide(slidenumber) {
 	var $pagetitle = $("#game .pagetitle").eq(0);
 	if ($currentSlide.attr("allpages") && $currentSlide.attr("allpages")>0 && $currentSlide.find(".headline").length === 0 && $currentSlide.find(".headcut").length === 0 && $currentSlide.attr("headline")) {
         $pagetitle.empty().show();
-        $pagetitle.html(document.title + "：" + $currentSlide.attr("headline"));
+        $pagetitle.html($currentSlide.attr("headline"));
     } else {
         $pagetitle.empty().hide();
     }
